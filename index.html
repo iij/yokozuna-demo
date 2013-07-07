@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/site.css" rel="stylesheet" media="screen">
+  </head>
+  <body ng-controller="MainCtrl">
+    <div class="navbar navbar-static-top navbar-inverse">
+      <div class="navbar-inner">
+        <a class="brand" href="#">Yokozuna Demo</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <div class="input-append">
+            <input class="input-xxlarge" type="text" ng-model="query">
+            <button class="btn" type="button" ng-click="search()"><i class="icon-search"></i> Search</button>
+          </div>
+          <p class="muted" ng-show="result">{{result.response.numFound | number}} results
+            ({{result.responseHeader.QTime / 1000}} seconds)</h3>
+          <ul class="unstyled">
+            <li ng-repeat="doc in result.response.docs">
+              <a href="/buckets/{{doc._yz_rb}}/keys/{{doc._yz_rk}}">{{doc._yz_rb}}:{{doc._yz_rk}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
