@@ -15,11 +15,10 @@
     <div class="container">
       <div class="row">
         <div class="span12">
-          <form ng-submit="search()">
-            <div class="input-append">
-              <input class="input-xxlarge" type="text" ng-model="query">
-              <button class="btn" type="button" ng-click="search()"><i class="icon-search"></i> Search</button>
-            </div>
+          <form class="form-inline" ng-submit="search()">
+            <input class="input-xxlarge" type="text" ng-model="query" placeholder="Search query">
+            <input class="input-medium" type="text" ng-model="bucket" placeholder="Bucket name" />
+            <button class="btn" type="submit"><i class="icon-search"></i> Search</button>
           </form>
           <p class="muted" ng-show="result">{{result.response.numFound | number}} results
             ({{result.responseHeader.QTime / 1000}} seconds)</p>
