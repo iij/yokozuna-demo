@@ -15,10 +15,12 @@
     <div class="container">
       <div class="row">
         <div class="span12">
-          <div class="input-append">
-            <input class="input-xxlarge" type="text" ng-model="query">
-            <button class="btn" type="button" ng-click="search()"><i class="icon-search"></i> Search</button>
-          </div>
+          <form ng-submit="search()">
+            <div class="input-append">
+              <input class="input-xxlarge" type="text" ng-model="query">
+              <button class="btn" type="button" ng-click="search()"><i class="icon-search"></i> Search</button>
+            </div>
+          </form>
           <p class="muted" ng-show="result">{{result.response.numFound | number}} results
             ({{result.responseHeader.QTime / 1000}} seconds)</p>
           <blockquote ng-repeat="doc in result.response.docs">
