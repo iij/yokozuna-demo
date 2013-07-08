@@ -25,10 +25,13 @@
           </div>
           <p class="muted" ng-show="result">{{result.response.numFound | number}} results
             ({{result.responseHeader.QTime / 1000}} seconds)</p>
-          <blockquote ng-repeat="doc in result.response.docs">
-            <span ng-bind="docs[doc._yz_rk]"></span>
-            <small><a href="/buckets/{{doc._yz_rb}}/keys/{{doc._yz_rk}}">/buckets/{{doc._yz_rb}}/keys/{{doc._yz_rk}}</a></small>
-          </blockquote>
+          <div ng-repeat="doc in result.response.docs">
+            <a ng-href="/buckets/{{doc._yz_rb}}/keys/{{doc._yz_rk}}" ng-bind="docs[doc._yz_rk].title"></a>
+            <blockquote>
+              <span ng-bind="docs[doc._yz_rk].text"></span>
+              <small>/buckets/{{doc._yz_rb}}/keys/{{doc._yz_rk}}<span class="spacer"></span>{{docs[doc._yz_rk].timestamp}}</small>
+            </blockquote>
+          </div>
         </div>
       </div>
     </div>

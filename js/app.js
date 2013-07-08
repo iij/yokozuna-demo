@@ -13,12 +13,23 @@ function MainCtrl($scope, $http) {
       data.response.docs.forEach(function(doc) {
         var url = '/buckets/' + doc._yz_rb + '/keys/' + doc._yz_rk;
         $http.get(url).success(function(data) {
-            $scope.docs[doc._yz_rk] = data;
+            $scope.docs[doc._yz_rk] = extractWikipedia(data);
         });
       })
     }).error(function(data, status) {
       $scope.result = null;
       $scope.error = 'Server returns ' + status + '. ' + data;
     });
+  }
+}
+
+var re = new RegExp('<title>([^<]+)</title>.*<timestamp>([^<]+)</timestamp>.*<text[^>]+>([^<]+)</text>');
+
+function extractWikipedia(text) {
+  var match = re.exec(text);
+  return {
+    title: match[1],
+    timestamp: match[2],
+    text: match[3]
   }
 }
