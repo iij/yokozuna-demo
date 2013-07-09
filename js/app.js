@@ -2,7 +2,7 @@
 
 angular.module('yz-demo', []).
   config(function($locationProvider) {
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(false);
   });
 
 function MainCtrl($scope, $http, $location, $rootScope) {
