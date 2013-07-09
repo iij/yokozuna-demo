@@ -7,12 +7,16 @@ angular.module('yz-demo', []).
 
 function MainCtrl($scope, $http, $location, $rootScope) {
   var setupParams = function() {
-    $scope.bucket = $location.search().b;
-    $scope.query = decodeURIComponent($location.search().q);
+    $scope.bucket = $location.search().b || '';
+    $scope.query = decodeURIComponent($location.search().q || '');
   };
   setupParams();
 
   $scope.search = function() {
+    if (! $scope.query || ! $scope.bucket) {
+      return
+    }
+
     var query = encodeURIComponent($scope.query);
     $location.search({b: $scope.bucket, q: query});
     $http.get('/search/' + $scope.bucket + '?wt=json&rows=20&q=' + query).success(function(data) {
