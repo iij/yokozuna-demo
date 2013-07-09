@@ -1,10 +1,20 @@
 "use strict"
 
-function MainCtrl($scope, $http) {
-  $scope.bucket = "test";
+angular.module('yz-demo', []).
+  config(function($locationProvider) {
+    $locationProvider.html5Mode(true);
+  });
+
+function MainCtrl($scope, $http, $location, $rootScope) {
+  var setupParams = function() {
+    $scope.bucket = $location.search().b;
+    $scope.query = decodeURIComponent($location.search().q);
+  };
+  setupParams();
 
   $scope.search = function() {
     var query = encodeURIComponent($scope.query);
+    $location.search({b: $scope.bucket, q: query});
     $http.get('/search/' + $scope.bucket + '?wt=json&rows=20&q=' + query).success(function(data) {
       $scope.error = null;
       $scope.query = data.responseHeader.params.q;
@@ -21,6 +31,11 @@ function MainCtrl($scope, $http) {
       $scope.error = 'Server returns ' + status + '. ' + data;
     });
   }
+
+  $rootScope.$on('$locationChangeSuccess', function() {
+    setupParams();
+    $scope.search();
+  });
 }
 
 var re = new RegExp('<title>([^<]+)</title>.*<timestamp>([^<]+)</timestamp>.*<text[^>]+>([^<]+)</text>');
