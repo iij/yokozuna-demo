@@ -42,7 +42,7 @@ function MainCtrl($scope, $http, $location, $rootScope) {
   });
 }
 
-var re = new RegExp('<title>([^<]+)</title>.*<timestamp>([^<]+)</timestamp>.*<text[^>]+>([^<]+)</text>');
+var re = /<title>([^<]+)<\/title>[\s\S]*<timestamp>([^<]+)<\/timestamp>[\s\S]*<text[^>]*>([^<]+)<\/text>/;
 
 function extractWikipedia(text) {
   var match = re.exec(text);
