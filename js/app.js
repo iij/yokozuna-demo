@@ -27,7 +27,7 @@ function MainCtrl($scope, $http, $location, $rootScope) {
       data.response.docs.forEach(function(doc) {
         var url = '/buckets/' + doc._yz_rb + '/keys/' + doc._yz_rk;
         $http.get(url).success(function(data) {
-            $scope.docs[doc._yz_rk] = extractWikipedia(data);
+          $scope.docs[doc._yz_rk] = extractWikipedia(data);
         });
       })
     }).error(function(data, status) {
