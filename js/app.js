@@ -49,6 +49,6 @@ function extractWikipedia(text) {
   return {
     title: match[1],
     timestamp: match[2],
-    text: match[3]
+    text: match[3].substring(0, 600)
   }
 }
