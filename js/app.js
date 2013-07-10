@@ -6,6 +6,9 @@ angular.module('yz-demo', []).
   });
 
 function MainCtrl($scope, $http, $location, $rootScope) {
+  $scope.rows = 20;
+  $scope.defaultSearchField = 'page_revision_text';
+
   var setupParams = function() {
     $scope.bucket = $location.search().b || '';
     $scope.query = decodeURIComponent($location.search().q || '');
@@ -19,7 +22,7 @@ function MainCtrl($scope, $http, $location, $rootScope) {
 
     var query = encodeURIComponent($scope.query);
     $location.search({b: $scope.bucket, q: query});
-    $http.get('/search/' + $scope.bucket + '?wt=json&rows=20&q=' + query).success(function(data) {
+    $http.get(buildUrl($scope.bucket, query, $scope.rows, $scope.defaultSearchField)).success(function(data) {
       $scope.error = null;
       $scope.query = data.responseHeader.params.q;
       $scope.result = data;
@@ -40,6 +43,11 @@ function MainCtrl($scope, $http, $location, $rootScope) {
     setupParams();
     $scope.search();
   });
+}
+
+function buildUrl(bucket, query, rows, defaultSearchField) {
+  return '/search/' + bucket + '?wt=json&rows=' + rows +
+         '&df=' + defaultSearchField + '&q=' + query;
 }
 
 var re = /<title>([^<]+)<\/title>[\s\S]*<timestamp>([^<]+)<\/timestamp>[\s\S]*<text[^>]*>([^<]+)<\/text>/;
